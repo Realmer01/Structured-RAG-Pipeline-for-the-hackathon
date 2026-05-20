@@ -1,0 +1,43 @@
+# config/settings.yaml
+# Central configuration for the RAG pipeline.
+# All tunable parameters live here — no hardcoded values in src/.
+
+# ── Dataset ──────────────────────────────────────────────────────────
+dataset:
+  raw_dir: "./dataset_for_project"   # source .txt + .ann files
+  processed_dir: "./data/processed"  # chunked output (optional cache)
+
+# ── Embedding Model ───────────────────────────────────────────────────
+embedding:
+  model_name: "BAAI/bge-base-en-v1.5"
+  batch_size: 64
+  normalize: true
+  # BGE-specific prefix improves retrieval accuracy
+  passage_prefix: "Represent this sentence: "
+  query_prefix: "Represent this sentence: "
+
+# ── Vector Store (ChromaDB) ───────────────────────────────────────────
+vector_store:
+  persist_dir: "./chroma_db"
+  collection_name: "biomedical_rag"
+  distance_metric: "cosine"
+
+# ── Chunking ──────────────────────────────────────────────────────────
+chunking:
+  strategy: "recursive"   # options: fixed | recursive | hierarchical
+  chunk_size: 150         # words
+  overlap: 20             # words
+
+# ── Retrieval ─────────────────────────────────────────────────────────
+retrieval:
+  top_k: 5
+
+# ── Generation (Gemini) ───────────────────────────────────────────────
+generation:
+  model: "gemini-2.5-flash"
+  prompt_template: "rag_answer"   # key in src/prompts.yaml
+
+# ── Evaluation ────────────────────────────────────────────────────────
+evaluation:
+  max_context_tokens: 8000      # warn if context exceeds this
+  min_similarity_threshold: 0.3 # flag weak retrievals below this

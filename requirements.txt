@@ -1,0 +1,10 @@
+chromadb==1.5.9
+sentence-transformers==5.5.0
+google-genai==2.4.0
+python-dotenv==1.2.2
+PyYAML==6.0.3
+aiofiles==23.1.0
+beautifulsoup4==4.13.0
+tiktoken==0.13.0
+pytest==8.4.0
+numpy==2.4.6

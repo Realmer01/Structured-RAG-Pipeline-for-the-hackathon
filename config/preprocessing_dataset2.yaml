@@ -1,0 +1,31 @@
+input:
+  paths:
+    - "./dataset2"
+  file_types:
+    - json
+  json:
+    encoding: "utf-8"
+    record_path: null
+    text_fields:
+      - "context"
+    metadata_fields:
+      - "corpus_name"
+    required_fields:
+      - "context"
+output:
+  format: "jsonl"
+  dir: "./data/processed"
+  filename: "dataset2_preprocessed_chunks.jsonl"
+  manifest_path: "./data/processed/dataset2_manifest.json"
+  write_manifest: true
+chunking:
+  chunk_size: 150
+  overlap: 20
+  min_chunk_words: 20
+cleanup:
+  html: true
+  remove_non_printable: true
+  normalize_whitespace: true
+tokenizer:
+  type: "approx"
+  approx_ratio: 0.75

@@ -1,0 +1,35 @@
+# API keys — never commit these
+.env
+
+# ChromaDB data — too large for GitHub
+chroma_db/
+
+# Raw dataset — too large for GitHub  
+data/raw/
+data/processed/
+
+# Python cache — not needed
+__pycache__/
+*.pyc
+*.pyo
+
+# Windows garbage
+Thumbs.db
+desktop.ini
+
+# Virtual environment — never commit this
+.venv/
+
+# VS Code settings
+.vscode/
+
+# Logs
+logs/
+*.log
+
+# Test cache
+tests/__pycache__/
+.pytest_cache/
+ 
+# Archive prototypes (local only)
+archive_prototype/

@@ -1,0 +1,39 @@
+input:
+  paths:
+    - "./data/raw"
+  file_types:
+    - csv
+    - json
+  csv:
+    delimiter: ","
+    encoding: "utf-8"
+    text_fields:
+      - "text"
+    metadata_fields: []
+    required_fields:
+      - "text"
+  json:
+    encoding: "utf-8"
+    record_path: null
+    text_fields:
+      - "text"
+    metadata_fields: []
+    required_fields:
+      - "text"
+output:
+  format: "jsonl"
+  dir: "./data/processed"
+  filename: "preprocessed_chunks.jsonl"
+  manifest_path: "./data/processed/manifest.json"
+  write_manifest: true
+chunking:
+  chunk_size: 150
+  overlap: 20
+  min_chunk_words: 20
+cleanup:
+  html: true
+  remove_non_printable: true
+  normalize_whitespace: true
+tokenizer:
+  type: "approx"
+  approx_ratio: 0.75
