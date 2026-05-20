@@ -1,6 +1,11 @@
 # Biomedical RAG Pipeline
 
-A Retrieval-Augmented Generation (RAG) system built over a corpus of **200 clinical case reports** from PubMed. Documents are chunked, embedded with BGE, stored in a persistent ChromaDB vector store, and answered with **Gemini 2.5 Flash**.
+A Retrieval-Augmented Generation (RAG) system with two supported dataset paths:
+
+- `dataset_for_project/` — default biomedical `.txt` + `.ann` corpus
+- `dataset2/` — JSON dataset processed through `src/preprocessing.py`
+
+Documents are chunked, embedded with BGE, stored in a persistent ChromaDB vector store, and answered with **Gemini 2.5 Flash**.
 
 ---
 
@@ -13,7 +18,8 @@ RAG/
 │       └── ci.yml              ← GitHub Actions: runs pytest on push/PR
 ├── config/
 │   └── settings.yaml           ← All tunable parameters (models, chunk sizes, etc.)
-├── dataset_for_project/        ← 200 biomedical .txt + .ann files (source dataset)
+├── dataset_for_project/        ← 200 biomedical .txt + .ann files (default dataset)
+├── dataset2/                   ← JSON dataset for preprocessing via config/preprocessing_dataset2.yaml
 ├── src/
 │   ├── ingestion.py            ← Load .txt/.ann files, chunk text
 │   ├── retrieval.py            ← ChromaDB vector store + BGE embeddings
@@ -62,13 +68,13 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Ingest the dataset
+### Ingest the default dataset
 
 ```python
 from src.ingestion import ingest_dataset
 from src.retrieval import get_client, get_or_create_collection, ingest_chunks
 
-# Load and chunk all 200 clinical case reports
+# Load and chunk the default biomedical dataset from dataset_for_project/
 chunks = ingest_dataset()
 
 # Store in ChromaDB (deduplication built in — safe to re-run)
@@ -195,7 +201,12 @@ All tests run **fully offline** — no API key or ChromaDB writes needed.
 
 ## Dataset
 
-The `dataset_for_project/` directory contains **200 PubMed clinical case reports** in [Brat standoff format](https://brat.nlplab.org/standoff.html):
+The repository supports two dataset sources:
+
+- `dataset_for_project/` — the default biomedical dataset with **200 PubMed clinical case reports** in [Brat standoff format](https://brat.nlplab.org/standoff.html).
+- `dataset2/` — a JSON dataset that is preprocessed by `src/preprocessing.py` using `config/preprocessing_dataset2.yaml`.
+
+The `dataset_for_project/` directory contains:
 
 | File type | Content |
 |-----------|---------|
